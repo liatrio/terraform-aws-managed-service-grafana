@@ -331,3 +331,21 @@ variable "security_group_tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "network_access_control" {
+  description = "List of network access control settings."
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "vpc_endpoint_ids" {
+  description = "An array of Amazon VPC endpoint IDs for the workspace. The only VPC endpoints that can be specified here are interface VPC endpoints for Grafana workspaces (using the com.amazonaws.[region].grafana-workspace service endpoint). Other VPC endpoints will be ignored."
+  type = list 
+  default = []
+}
+
+variable "nac_prefix_list_ids" {
+  description = "An array of prefix list IDs."
+  type = list
+  default = []
+}
