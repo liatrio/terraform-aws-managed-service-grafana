@@ -104,6 +104,12 @@ variable "vpc_configuration" {
   default     = {}
 }
 
+variable "nac_configuration" {
+  description = "The configuration settings for an Amazon VPC that contains data sources for your Grafana workspace to connect to"
+  type        = any
+  default     = {}
+}
+
 ################################################################################
 # Workspace API Key
 ################################################################################
