@@ -28,6 +28,15 @@ resource "aws_grafana_workspace" "this" {
   role_arn                  = var.create_iam_role ? aws_iam_role.this[0].arn : var.iam_role_arn
   stack_set_name            = coalesce(var.stack_set_name, var.name)
 
+  dynamic "network_access_control" {
+    for_each = length(var.nac_configuration) > 0 ? [var.nac_configuration] : []
+
+    content {
+      prefix_list_ids = network_access_control.value.nac_prefix_list_ids
+      vpce_ids        = network_access_control.value.vpc_endpoint_ids
+    }
+  }
+
   dynamic "vpc_configuration" {
     for_each = length(var.vpc_configuration) > 0 ? [var.vpc_configuration] : []
 
@@ -261,6 +270,17 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
     }
   }
+  # Prometheus SSO resource
+  dynamic "statement" {
+    for_each = contains(var.data_sources, "PROMETHEUS") && contains(var.authentication_providers, "AWS_SSO") ? [1] : []
+
+    content {
+      sid       = "AllowSSOListInstances"
+      actions   = ["sso:ListInstances"]
+      resources = ["*"]
+    }
+  }
+
 
   # SNS Notification
   dynamic "statement" {

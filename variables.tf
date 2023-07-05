@@ -104,6 +104,12 @@ variable "vpc_configuration" {
   default     = {}
 }
 
+variable "nac_configuration" {
+  description = "The configuration settings for an Amazon VPC that contains data sources for your Grafana workspace to connect to"
+  type        = any
+  default     = {}
+}
+
 ################################################################################
 # Workspace API Key
 ################################################################################
@@ -329,5 +335,11 @@ variable "security_group_rules" {
 variable "security_group_tags" {
   description = "A map of additional tags to add to the security group created"
   type        = map(string)
+  default     = {}
+}
+
+variable "network_access_control" {
+  description = "List of network access control settings."
+  type        = map(list(string))
   default     = {}
 }
