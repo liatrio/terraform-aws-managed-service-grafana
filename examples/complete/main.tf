@@ -59,6 +59,11 @@ module "managed_grafana" {
     }
   }
 
+  nac_configuration = {
+    nac_prefix_list_ids = var.nac_prefix_list_ids
+    vpc_endpoint_ids    = var.vpc_endpoint_ids
+  }
+
   # Workspace API keys
   workspace_api_keys = {
     viewer = {
