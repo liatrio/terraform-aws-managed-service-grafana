@@ -32,8 +32,8 @@ resource "aws_grafana_workspace" "this" {
     for_each = length(var.nac_configuration) > 0 ? [var.nac_configuration] : []
 
     content {
-      prefix_list_ids = nac_configuration.value.nac_prefix_list_ids
-      vpce_ids        = nac_configuration.value.vpc_endpoint_ids
+      prefix_list_ids = network_access_control.value.nac_prefix_list_ids
+      vpce_ids        = network_access_control.value.vpc_endpoint_ids
     }
   }
 
